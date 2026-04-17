@@ -28,5 +28,9 @@ def get_vlm_model(config):
         from starVLA.model.modules.vlm.CosmosReason2 import _CosmosReason2_Interface
 
         return _CosmosReason2_Interface(config)
+    
+    elif "InternVL" in vlm_name or "internvl" in vlm_name.lower():
+        from .InternVL3 import _InternVL3_Interface
+        return _InternVL3_Interface(config)
     else:
         raise NotImplementedError(f"VLM model {vlm_name} not implemented")
