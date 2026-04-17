@@ -276,6 +276,6 @@ def start_debugpy_once():
 
 
 if __name__ == "__main__":
-    if os.getenv("DEBUG", False):
-        start_debugpy_once()
+    # if os.getenv("DEBUG", False):
+    #     start_debugpy_once()
     tyro.cli(eval_libero)

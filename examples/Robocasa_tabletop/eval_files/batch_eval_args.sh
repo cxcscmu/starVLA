@@ -6,8 +6,8 @@
 ###########################################################################################
 # === Please modify the paths to Python executables in conda environments ===
 
-cd ./starVLA
-starVLA_PYTHON=~/miniconda3/envs/starVLA/bin/python
+cd /data/user_data/yutengz/projects/starVLA
+starVLA_PYTHON=~/miniconda3/envs/starvla2/bin/python
 ROBOCASA_PYTHON=~/miniconda3/envs/robocasa/bin/python
 export PYTHONPATH=$(pwd):${PYTHONPATH}
 CKPT_DEFAULT="StarVLA/Qwen3-VL-OFT-Robocasa/checkpoints/steps_90000_pytorch_model.pt"
