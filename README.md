@@ -26,9 +26,11 @@ In StarVLA (also a pun on "start VLA" ),  each functional component (model, data
 
 
 
-**[2026/04/09]** 🔜 🚀 unified **multi-benchmark co-training** example (combining LIBERO, SimplerEnv, RoboTwin, VLA-Arena, etc.) is coming soon. Stay tuned!
+**[2026/04/09]** 🚀 unified **multi-benchmark co-training** example (combining LIBERO, SimplerEnv, RoboTwin, VLA-Arena, etc.) is coming soon. Stay tuned!
 
 **[2026/04/19]** 📋 As community PRs grow rapidly, we are establishing **PR guidelines** to maintain code quality and stability. Thank you all for your contributions! Please review the new [PR Guidelines](docs/PR_readme.md) and [Branching Strategy](docs/branching_strategy.md) before submitting PRs.
+
+**[2026/04/18]** 🔥 StarVLA now supports [DOMINO](examples/DOMINO), a dynamic manipulation benchmark for moving objects and time-varying scenes. Original DOMINO repository is [here](https://github.com/H-EmbodVis/DOMINO).
 
 **[2026/04/09]** 🎯 Thanks to the [RLinf](https://rlinf.readthedocs.io) team, StarVLA now supports **RL post-training**! Check out the [StarVLA × RLinf tutorial](https://rlinf.readthedocs.io/en/latest/rst_source/examples/embodied/starvla.html) to get started.
 
@@ -109,6 +111,7 @@ Achieve **state-of-the-art (SOTA) performance** on a variety of benchmarks, as f
 - [x] **LIBERO-plus**
 - [x] **Robocasa**
 - [x] **RoboTwin**
+- [x] **DOMINO**
 - [x] **BEHAVIOR**
 - [ ] **SO101**
 - [x] **Calvin** *See details in [`examples/calvin`](examples/calvin)
@@ -227,7 +230,7 @@ See [docs/faq.md](docs/faq.md) for common questions on configuration, freezing, 
 
 ## Contributing
 
-StarVLA was co-founded by [Jinhui Ye](https://jhuiye.com/) and [Weiyu Guo](https://weiyuguo.com/), and has been gradually expanded by community contributors. Community contributors are the driving force behind StarVLA's growing ecosystem. We deeply appreciate every PR, bug fix, and piece of feedback from the open-source community — your efforts keep StarVLA evolving rapidly. A full, continuously updated contributor list is maintained at [starvla.github.io/contributors](https://starvla.github.io/contributors).
+Community contributors are the driving force behind StarVLA's growing ecosystem. We deeply appreciate every PR, bug fix, and piece of feedback from the open-source community — your efforts keep StarVLA evolving rapidly. A full, continuously updated contributor list is maintained at [starvla.github.io/contributors](https://starvla.github.io/contributors).
 
 Thanks to all the people who have contributed to StarVLA:
 
