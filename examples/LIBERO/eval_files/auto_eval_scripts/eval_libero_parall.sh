@@ -1,8 +1,8 @@
 ###########################################################################################
 # === Please modify the following paths according to your environment ===
-export LIBERO_HOME=/home/jye624/Projcets/LIBERO  # Root directory of the LIBERO project
-export LIBERO_python=/home/jye624/.conda/envs/libero/bin/python  # Path to the Python environment
-export starVLA_python=/home/jye624/.conda/envs/starVLA/bin/python  # Path to the Python environment
+export LIBERO_HOME=/data/user_data/yutengz/projects/LIBERO  # Root directory of the LIBERO project
+export LIBERO_python=/home/yutengz/miniconda3/envs/libero/bin/python  # Path to the Python environment
+export starVLA_python=/home/yutengz/miniconda3/envs/starvla/bin/python  # Path to the Python environment
 
 # === End of environment variable configuration ===
 export LIBERO_CONFIG_PATH=${LIBERO_HOME}/libero  # Path to LIBERO configuration files

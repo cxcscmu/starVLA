@@ -18,6 +18,13 @@ def get_vlm_model(config):
         from .Gemma4 import _Gemma4_VL_Interface
 
         return _Gemma4_VL_Interface(config)
+    elif "internvl" in vlm_name.lower():
+        # Covers InternVL3 / InternVL3.5 (HF format, e.g. OpenGVLab/InternVL3_5-2B-HF).
+        # The non-HF OpenGVLab variants ship with `trust_remote_code` modeling files
+        # and a different .chat() API — point your config at the *-HF checkpoints.
+        from .InternVL import _InternVL3_Interface
+    
+        return _InternVL3_Interface(config)
     elif "florence" in vlm_name.lower():  # temp for some ckpt
         from .Florence2 import _Florence_Interface
 
