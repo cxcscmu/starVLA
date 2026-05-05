@@ -1,0 +1,142 @@
+# Example: QwenGR00T framework with InternVL3.5 backbone
+# This configuration shows how to use InternVL3.5 as the VLM backbone in starVLA
+
+# Disable warnings during config loading
+hydra:
+  warnings:
+    ignore_hydra_init_config: true
+
+# Training configuration
+trainer:
+  # Total training steps (checkpoints every save_interval)
+  max_train_steps: 100000
+  save_interval: 5000
+  eval_interval: 10000
+  
+  # Optimizer: adamw_8bit for memory efficiency
+  optimizer: adamw_8bit
+  learning_rate: 1e-4
+  weight_decay: 0.01
+  max_grad_norm: 1.0
+  
+  # Learning rate schedule
+  lr_scheduler: cosine
+  warmup_steps: 1000
+  
+  # Gradient accumulation steps
+  gradient_accumulation_steps: 1
+  
+  # Mixed precision (bfloat16 for InternVL3.5)
+  dtype: bfloat16
+
+# Framework configuration
+framework:
+  # Framework type
+  name: QwenGR00T
+  
+  # VLM backbone: InternVL3.5
+  qwenvl:
+    # Model checkpoint path - InternVL3.5-1B
+    base_vlm: "./playground/Pretrained_models/InternVL3_5-1B"
+    # Alternative: Use HuggingFace Hub
+    # base_vlm: "OpenGVLab/InternVL3.5-1B"
+    
+    # Attention implementation
+    # Options: "sdpa" (default), "flash_attention_2", "eager"
+    attn_implementation: "sdpa"
+    
+    # VLM hidden dimension (auto-extracted from model, shown here for reference)
+    # InternVL3.5-1B uses llm_config.hidden_size = 1024
+    vl_hidden_dim: 1024
+    
+    # Number of VL layers (for some frameworks that need this info)
+    num_vl_layers: 28  # Qwen3-0.6B in InternVL3.5 has 28 layers
+  
+  # Action head configuration (Flow-matching / DiT diffusion)
+  action_model:
+    action_model_type: DiT-B
+    action_hidden_dim: 1024
+    hidden_size: 1024
+    add_pos_embed: true
+    max_seq_len: 1024
+    action_dim: 7                    # Action dimension (e.g., 7 for robot arm)
+    future_action_window_size: 8     # Predict 8 future steps
+    past_action_window_size: 0       # No past actions
+    repeated_diffusion_steps: 4
+    num_inference_timesteps: 4
+    
+    # Diffusion model configuration
+    diffusion_model_cfg:
+      cross_attention_dim: 1024      # Matches vl_hidden_dim
+      dropout: 0.1
+      final_dropout: false
+      interleave_self_attention: true
+      norm_type: ada_norm
+      num_layers: 12
+      output_dim: 512
+      positional_embeddings: null
+
+# Dataset configuration
+datasets:
+  # OXE (Open X-Embodiment) dataset mix
+  vla_data:
+    # Dataset roots
+    data_root_dir: "/path/to/datasets"
+    
+    # Dataset mixture (recommended for multimodal pretraining)
+    dataset_py: vla_data.py
+    data_mix: bridge_oxe,droid_oxe,fractal_oxe
+    
+    # Per-device batch size (adjust based on GPU memory)
+    # InternVL3.5-1B is efficient, supports larger batches
+    per_device_batch_size: 16
+    
+    # Optional: Chain-of-Thought prompt template
+    # Uncomment to use CoT reasoning
+    # CoT_prompt: "You are a helpful robot. Please help me: {instruction}"
+    
+    # Resolution for training images
+    resolution: 224
+
+# Checkpoint and logging
+checkpoint:
+  # Save directory
+  save_dir: "./results/Checkpoints/internvl3_5_example"
+  
+  # Checkpoint strategy: last, best, all
+  save_strategy: "last"
+  
+  # Keep last N checkpoints
+  save_total_limit: 5
+
+# Logging configuration
+logging:
+  # Log every N steps
+  log_interval: 50
+  
+  # W&B configuration (optional)
+  use_wandb: true
+  wandb_project: "starVLA-InternVL3.5"
+  wandb_entity: "your-entity"
+  wandb_name: "internvl3_5_gr00t_v1"
+
+# Optional: Image preprocessing
+image_preprocessing:
+  # Image size for training
+  train_size: 224
+  
+  # Augmentation
+  augmentation:
+    enabled: true
+    random_crop: true
+    random_flip: true
+    color_jitter: true
+
+# Notes:
+# 1. InternVL3.5-1B is a compact model (1B params) with high efficiency
+# 2. Hidden dimension is 1024 (from Qwen3-0.6B backbone)
+# 3. Supports batch_size up to 24 on single GPU (24GB VRAM)
+# 4. bfloat16 training is recommended for efficiency
+# 5. Action token range: 151669-153716 (after special token addition)
+#
+# For more details, see: starVLA/model/modules/vlm/INTERNVL3_5_README.md
