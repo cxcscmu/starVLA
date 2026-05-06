@@ -178,10 +178,29 @@ class Qwen_PI_v3(baseframework):
         # depth and project_layers count must match `num_hidden_layers` exactly.
         # Qwen3-VL stores num_hidden_layers under text_config; Qwen2.5-VL puts it
         # on the top-level config.  getattr(..., vlm_hf_cfg) handles both cases.
+
+        # vlm_hf_cfg = self.qwen_vl_interface.model.config
+        # text_cfg = getattr(vlm_hf_cfg, "text_config", vlm_hf_cfg)
+        # num_vl_layers = int(text_cfg.num_hidden_layers)
+        # llm_hidden_size = int(vlm_hf_cfg.hidden_size)
+
+
         vlm_hf_cfg = self.qwen_vl_interface.model.config
-        text_cfg = getattr(vlm_hf_cfg, "text_config", vlm_hf_cfg)
+        # Resolve the LLM-side sub-config across VLM families:
+        #   - Qwen2.5-VL: attributes live on the top-level config
+        #   - Qwen3-VL:   nested under `text_config`
+        #   - InternVL3 / InternVL3.5: nested under `llm_config`
+        if hasattr(vlm_hf_cfg, "text_config"):
+            text_cfg = vlm_hf_cfg.text_config
+        elif hasattr(vlm_hf_cfg, "llm_config"):
+            text_cfg = vlm_hf_cfg.llm_config
+        else:
+            text_cfg = vlm_hf_cfg
+
         num_vl_layers = int(text_cfg.num_hidden_layers)
-        llm_hidden_size = int(vlm_hf_cfg.hidden_size)
+        llm_hidden_size = int(text_cfg.hidden_size)
+
+
         self.config.framework.qwenvl.vl_hidden_dim = llm_hidden_size
         self.config.framework.qwenvl.num_vl_layers = num_vl_layers
 

@@ -14,10 +14,10 @@
 ###########################################################################################
 # === Please modify the following paths according to your environment ===
 # Framework_name=QwenOFT
-Framework_name=QwenPI
+Framework_name=QwenPI_v3
 freeze_module_list=''
 base_vlm=playground/Pretrained_models/InternVL3_5-1B
-config_yaml=./examples/LIBERO/train_files/starvla_cotrain_libero.yaml
+config_yaml=./examples/LIBERO/train_files/starvla_cotrain_libero_PI.yaml
 libero_data_root=playground/Datasets/LEROBOT_LIBERO_DATA
 data_mix=libero_all
 run_root_dir=./playground/Checkpoints
