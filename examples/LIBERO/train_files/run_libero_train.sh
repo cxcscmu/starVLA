@@ -13,11 +13,10 @@
 # export NCCL_SOCKET_TIMEOUT_MS=360000
 ###########################################################################################
 # === Please modify the following paths according to your environment ===
-# Framework_name=QwenOFT
-Framework_name=QwenPI_v3
+Framework_name=QwenPI
 freeze_module_list=''
-base_vlm=playground/Pretrained_models/InternVL3_5-1B
-config_yaml=./examples/LIBERO/train_files/starvla_cotrain_libero_PI.yaml
+base_vlm=playground/Pretrained_models/Qwen3.5-0.8B
+config_yaml=./examples/LIBERO/train_files/starvla_cotrain_libero.yaml
 libero_data_root=playground/Datasets/LEROBOT_LIBERO_DATA
 data_mix=libero_all
 run_root_dir=./playground/Checkpoints
