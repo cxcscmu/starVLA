@@ -308,6 +308,6 @@ if __name__ == "__main__":
         datefmt="%m/%d [%H:%M:%S]",
         force=True,
     )
-    if os.getenv("DEBUG", False):
-        start_debugpy_once()
+    # if os.getenv("DEBUG", False):
+    #     start_debugpy_once()
     tyro.cli(eval_libero)
