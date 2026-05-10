@@ -48,10 +48,11 @@ from examples.LIBERO.eval_files.model2libero_interface import ModelClient
 
 # from calvin_env.envs.play_table_env import get_env
 
-# Set OpenGL platform for headless rendering
-os.environ["PYOPENGL_PLATFORM"] = "osmesa"
-os.environ["PYOPENGL_PLATFORM"] = "osmesa"
-os.environ["MUJOCO_GL"] = "osmesa"
+# Set OpenGL platform for headless rendering — use EGL on this cluster
+# (no OSMesa system libs; libEGL_mesa / libEGL_nvidia present).
+# Allow override via env so a user can pick osmesa/glx if they prefer.
+os.environ.setdefault("PYOPENGL_PLATFORM", "egl")
+os.environ.setdefault("MUJOCO_GL", "egl")
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 

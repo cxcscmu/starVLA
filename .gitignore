@@ -253,3 +253,5 @@ tmp
 logs/*
 **/.nf*
 code
+
+.claude/
